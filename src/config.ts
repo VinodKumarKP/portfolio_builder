@@ -103,3 +103,15 @@ I thrive in collaborative environments and love mentoring junior developers. Whe
     "Agile Scrum Master"
   ]
 };
+
+export const POC_SIDEBAR = {
+  title: "Categories",
+  categories: [
+    {
+      name: "AI/ML & Data",
+      projects: [
+        { title: "Example POC 1", slug: "example-poc-1" }
+      ]
+    }
+  ]
+};
