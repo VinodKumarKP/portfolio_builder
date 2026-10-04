@@ -4,6 +4,17 @@ year: 2023
 phase: "Backend Developer"
 description: "Data processing pipeline designed to handle high-throughput telemetry data."
 tags: ["Python", "AWS", "Data Engineering"]
+sidebar:
+  - label: "Pipeline Type"
+    value: "Real-time Data Ingestion"
+  - label: "Technology"
+    value: "AWS Kinesis, Lambda, Python"
+  - label: "Throughput"
+    value: "1M+ events/second"
+  - label: "Team Size"
+    value: "3 Engineers"
+  - label: "Duration"
+    value: "8 months"
 ---
 
 ## Overview

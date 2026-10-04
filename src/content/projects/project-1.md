@@ -4,6 +4,15 @@ year: 2024
 phase: "Senior Cloud Architect"
 description: "Migrated a legacy e-commerce monolith into a highly scalable serverless architecture."
 tags: ["AWS", "Serverless", "Node.js", "Architecture"]
+sidebar:
+  - label: "Architecture"
+    value: "Serverless"
+  - label: "Timeline"
+    value: "6 months"
+  - label: "Team"
+    value: "4 Engineers"
+  - label: "Tech Stack"
+    value: "AWS Lambda, DynamoDB, API Gateway"
 ---
 
 ## Impact

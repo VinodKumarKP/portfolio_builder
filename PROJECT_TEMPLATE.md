@@ -7,9 +7,18 @@ title: "Project Title"
 year: 2019
 phase: "Your Role/Phase"
 description: "One-line summary of what this project is about"
+sidebar:
+  - label: "Architectural Pattern"
+    value: "Microservices"
+  - label: "Technologies"
+    value: "React, Node.js, PostgreSQL"
+  - label: "Team Size"
+    value: "5 Engineers"
 ---
 ```
-**Important:** Do NOT include a `layout` field - the dynamic route handles that.
+**Important:** 
+- Do NOT include a `layout` field - the dynamic route handles that.
+- The `sidebar` field is **optional**. Omit it if you don't want a sidebar for this project.
 
 ## Markdown Structure (follow this exactly)
 
@@ -107,6 +116,23 @@ Write a personal reflection on what this project taught you as an architect.
 Typically 2-3 paragraphs.
 ```
 
+## Sidebar Options (Examples)
+
+The sidebar is optional and can include any information relevant to your project:
+```yaml
+sidebar:
+  - label: "Architectural Pattern"
+    value: "Microservices"
+  - label: "Technologies"
+    value: "React, Node.js, AWS"
+  - label: "Duration"
+    value: "6 months"
+  - label: "Team Size"
+    value: "5 Engineers"
+  - label: "Status"
+    value: "Launched"
+```
+
 ## Format Rules
 
 1. **Metrics format:** `VALUE | Label` (pipe-separated)
@@ -114,6 +140,7 @@ Typically 2-3 paragraphs.
 3. **Challenge headers:** `### Challenge N: Title`
 4. **Tags:** Pipe-separated on their own line: `tag1 | tag2 | tag3`
 5. **Bold outcomes:** `- **Title:** Description`
+6. **Sidebar:** Optional array of label/value pairs (displays on the right side)
 
 ## Color Coding (Automatic)
 - Red boxes: Sections with `**Issue:**`
