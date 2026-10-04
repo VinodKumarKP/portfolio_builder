@@ -63,12 +63,24 @@ const getUrl = (path: string) => {
       }
 
       header {
-        border-bottom: 1px solid var(--color-border);
-        padding: var(--space-md) 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 1.2rem 0;
         position: sticky;
         top: 0;
-        background-color: var(--color-bg);
+        background-color: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         z-index: 100;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        header {
+          background-color: rgba(26, 26, 26, 0.75);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
       }
 
       nav {
@@ -97,11 +109,30 @@ const getUrl = (path: string) => {
         text-decoration: none;
         color: var(--color-text);
         font-size: 0.95rem;
-        transition: color 0.2s;
+        font-weight: 500;
+        position: relative;
+        padding-bottom: 4px;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(135deg, var(--color-accent), #8a2be2);
+        transition: width 0.3s ease;
+        border-radius: 2px;
       }
 
       .nav-links a:hover {
         color: var(--color-accent);
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
       }
 
       main {
