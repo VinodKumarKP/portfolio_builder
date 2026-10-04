@@ -4,15 +4,18 @@ import { SITE } from '../config';
 export interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
-const { title = SITE.title, description = SITE.description } = Astro.props;
+const { title = SITE.title, description = SITE.description, image = '/og-image.jpg' } = Astro.props;
 
 // Helper to ensure base url works correctly
 const base = import.meta.env.BASE_URL;
 const getUrl = (path: string) => {
   return path.startsWith('/') ? `${base === '/' ? '' : base}${path}` : path;
 };
+
+const fullUrl = new URL(Astro.url.pathname, SITE.url).href;
 ---
 
 <!DOCTYPE html>
@@ -21,6 +24,25 @@ const getUrl = (path: string) => {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={fullUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, SITE.url).href} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={fullUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, SITE.url).href} />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0066cc" />
+
     <title>{title}</title>
     <style>
       * {
@@ -31,13 +53,13 @@ const getUrl = (path: string) => {
 
       :root {
         --color-bg: #ffffff;
-        --color-text: #1a1a1a;
-        --color-text-light: #666;
-        --color-border: #e5e5e5;
+        --color-text: #0f0f0f;
+        --color-text-light: #555;
+        --color-border: #ddd;
         --color-accent: #0066cc;
         --color-accent-dark: #0052a3;
         --color-success: #28a745;
-        --color-bg-light: #f8f9fa;
+        --color-bg-light: #f5f5f5;
         --space-xs: 0.5rem;
         --space-sm: 1rem;
         --space-md: 1.5rem;
@@ -46,13 +68,29 @@ const getUrl = (path: string) => {
       }
 
       @media (prefers-color-scheme: dark) {
-        :root {
-          --color-bg: #1a1a1a;
-          --color-text: #ffffff;
-          --color-text-light: #aaa;
+        :root:not([data-theme="light"]) {
+          --color-bg: #0f0f0f;
+          --color-text: #f5f5f5;
+          --color-text-light: #b0b0b0;
           --color-border: #333;
-          --color-bg-light: #2d2d2d;
+          --color-bg-light: #1f1f1f;
         }
+      }
+
+      html[data-theme="dark"] {
+        --color-bg: #0f0f0f;
+        --color-text: #f5f5f5;
+        --color-text-light: #b0b0b0;
+        --color-border: #333;
+        --color-bg-light: #1f1f1f;
+      }
+
+      html[data-theme="light"] {
+        --color-bg: #ffffff;
+        --color-text: #0f0f0f;
+        --color-text-light: #555;
+        --color-border: #ddd;
+        --color-bg-light: #f5f5f5;
       }
 
       body {
@@ -63,23 +101,19 @@ const getUrl = (path: string) => {
       }
 
       header {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        border-bottom: 1px solid var(--color-border);
         padding: 1.2rem 0;
         position: sticky;
         top: 0;
-        background-color: rgba(255, 255, 255, 0.75);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        background-color: var(--color-bg);
         z-index: 100;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-        transition: background-color 0.3s ease, border-color 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       }
 
       @media (prefers-color-scheme: dark) {
-        header {
-          background-color: rgba(26, 26, 26, 0.75);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        header:not([data-theme="light"]) {
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
       }
 
@@ -103,6 +137,7 @@ const getUrl = (path: string) => {
         display: flex;
         gap: var(--space-lg);
         list-style: none;
+        align-items: center;
       }
 
       .nav-links a {
@@ -133,6 +168,29 @@ const getUrl = (path: string) => {
 
       .nav-links a:hover::after {
         width: 100%;
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.3rem;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background-color 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        background-color: var(--color-bg-light);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .theme-toggle:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
       }
 
       main {
@@ -186,9 +244,48 @@ const getUrl = (path: string) => {
           <li><a href={getUrl("/")}>Home</a></li>
           <li><a href={getUrl("/projects")}>Projects</a></li>
           <li><a href={getUrl("/about")}>About</a></li>
+          <li>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+              <span id="theme-icon">🌙</span>
+            </button>
+          </li>
         </ul>
       </nav>
     </header>
+
+    <script>
+      // Dark mode toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+      const html = document.documentElement;
+
+      // Check for saved theme preference or default to system preference
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+      function setTheme(theme) {
+        if (theme === 'dark') {
+          html.setAttribute('data-theme', 'dark');
+          themeIcon.textContent = '☀️';
+          localStorage.setItem('theme', 'dark');
+        } else {
+          html.setAttribute('data-theme', 'light');
+          themeIcon.textContent = '🌙';
+          localStorage.setItem('theme', 'light');
+        }
+      }
+
+      // Set initial theme
+      setTheme(initialTheme);
+
+      // Toggle on button click
+      themeToggle?.addEventListener('click', () => {
+        const currentTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+      });
+    </script>
     <main>
       <slot />
     </main>

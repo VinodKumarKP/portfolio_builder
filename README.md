@@ -9,6 +9,8 @@ Designed for developers, engineers, and architects who want a stunning, performa
 - **Config-Driven**: Centralized `src/config.ts` file for all your personal data. No need to touch HTML or Astro files to update your resume!
 - **Content Collections**: Easily manage your project case studies using Markdown files with strict frontmatter validation.
 - **Responsive & Modern Design**: Glassmorphism effects, gradients, and micro-animations out of the box.
+- **Dark Mode Toggle**: One-click theme switcher with persistent user preference (remembers choice across sessions).
+- **SEO Optimized**: Built-in Open Graph tags, Twitter Cards, and auto-generated sitemap.xml for search engines.
 - **GitHub Pages Ready**: Included deployment workflow for easy hosting.
 
 ---
@@ -135,6 +137,18 @@ Your projects are managed using Astro Content Collections. Delete the example ma
 > [!TIP]
 > **Check out `PROJECT_TEMPLATE.md`** located in the root of the repository for a comprehensive guide on how to format your Markdown projects. It explains how to structure your case studies to automatically render metrics cards, issue/solution blocks, and more!
 
+### Step 4: Customize Dark Mode & SEO (Optional)
+
+**Dark Mode:**
+The portfolio includes a dark mode toggle button in the navbar. Users can click the moon/sun icon to switch themes, and their preference is saved locally. The theme automatically respects system preferences on first visit.
+
+**SEO Features:**
+- **Open Graph & Twitter Cards**: Automatically generates social media previews when your portfolio is shared on LinkedIn, Twitter, or Facebook
+- **Sitemap**: Auto-generated `sitemap.xml` helps search engines index your content
+- **Meta Tags**: All pages include proper meta descriptions and robot directives
+
+No configuration needed—these features work out of the box!
+
 Each project markdown file must include the following frontmatter at the top:
 ```yaml
 ---
@@ -161,3 +175,12 @@ To deploy your live site:
 4. The Action will automatically build and deploy your site. You can watch the progress in the **Actions** tab of your repository!
 
 If you prefer to deploy to **Vercel** or **Netlify**, you can simply connect this repository to those platforms and they will automatically detect it as an Astro project and build it with zero configuration.
+
+### Search Engine Optimization
+
+After deploying:
+1. Your portfolio automatically generates a `sitemap.xml` at the root of your deployed site
+2. Submit this sitemap to [Google Search Console](https://search.google.com/search-console) for faster indexing
+3. Open Graph meta tags are automatically included for rich social media previews
+
+Update `public/robots.txt` with your actual domain's sitemap URL for best results.
