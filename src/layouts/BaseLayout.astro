@@ -1,10 +1,18 @@
 ---
+import { SITE } from '../config';
+
 export interface Props {
-  title: string;
+  title?: string;
   description?: string;
 }
 
-const { title, description = "Vinod Kumar - Data & AI Architect" } = Astro.props;
+const { title = SITE.title, description = SITE.description } = Astro.props;
+
+// Helper to ensure base url works correctly
+const base = import.meta.env.BASE_URL;
+const getUrl = (path: string) => {
+  return path.startsWith('/') ? `${base === '/' ? '' : base}${path}` : path;
+};
 ---
 
 <!DOCTYPE html>
@@ -142,11 +150,11 @@ const { title, description = "Vinod Kumar - Data & AI Architect" } = Astro.props
   <body>
     <header>
       <nav>
-        <a href="/my_portfolio/" class="logo">Vinod Kumar KP</a>
+        <a href={getUrl("/")} class="logo">{SITE.title.split('-')[0].trim()}</a>
         <ul class="nav-links">
-          <li><a href="/my_portfolio/">Home</a></li>
-          <li><a href="/my_portfolio/projects">Projects</a></li>
-          <li><a href="/my_portfolio/about">About</a></li>
+          <li><a href={getUrl("/")}>Home</a></li>
+          <li><a href={getUrl("/projects")}>Projects</a></li>
+          <li><a href={getUrl("/about")}>About</a></li>
         </ul>
       </nav>
     </header>
@@ -154,7 +162,7 @@ const { title, description = "Vinod Kumar - Data & AI Architect" } = Astro.props
       <slot />
     </main>
     <footer>
-      <p>&copy; 2026 Vinod Kumar. All rights reserved.</p>
+      <p>&copy; {new Date().getFullYear()} {SITE.title.split('-')[0].trim()}. All rights reserved.</p>
     </footer>
   </body>
 </html>

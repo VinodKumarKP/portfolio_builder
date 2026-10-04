@@ -1,8 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { HERO, TIMELINE, METRICS } from '../config';
+
+// Helper to ensure base url works correctly
+const base = import.meta.env.BASE_URL;
+const getUrl = (path: string) => {
+  return path.startsWith('/') ? `${base === '/' ? '' : base}${path}` : path;
+};
 ---
 
-<BaseLayout title="Vinod Kumar - Data & AI Architect">
+<BaseLayout title="Portfolio">
   <style>
     .hero {
       text-align: center;
@@ -169,6 +176,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       border-radius: 20px;
       border: 1px solid rgba(0, 102, 204, 0.2);
       transition: all 0.3s ease;
+      margin-top: 8px;
     }
 
     .timeline-project-link:hover {
@@ -280,110 +288,45 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </style>
 
   <div class="hero">
-    <h1>Architect & AI Engineer</h1>
-    <p class="subtitle">18+ years building data pipelines, cloud infrastructure, and AI systems at scale</p>
+    <h1>{HERO.title}</h1>
+    <p class="subtitle">{HERO.subtitle}</p>
     <div class="cta-buttons">
-      <a href="/my_portfolio/projects">Explore Projects</a>
-      <a href="/my_portfolio/about">Learn More</a>
+      <a href={getUrl(HERO.ctaPrimary.href)}>{HERO.ctaPrimary.label}</a>
+      <a href={getUrl(HERO.ctaSecondary.href)}>{HERO.ctaSecondary.label}</a>
     </div>
   </div>
 
   <div class="timeline">
-    <h2>My Journey from Data Engineer to AI Architect</h2>
+    <h2>Journey & Experience</h2>
     <div class="timeline-container">
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="content">
-          <div class="year">2007</div>
-          <div class="phase-title">ASP.NET Developer</div>
-          <div class="phase-desc">Started my first project building scalable UI architecture.</div>
-          <a href="/my_portfolio/projects/enterprise-tokenization-ui/" class="timeline-project-link">View Project: Enterprise Tokenization UI →</a>
+      {TIMELINE.map((item) => (
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="content">
+            <div class="year">
+              {item.year}
+              {item.isCurrent && <span class="current-focus-badge">Current Focus</span>}
+            </div>
+            <div class="phase-title">{item.title}</div>
+            <div class="phase-desc">{item.description}</div>
+            {item.links && item.links.map(link => (
+              <div>
+                <a href={getUrl(link.url)} class="timeline-project-link">{link.label}</a>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="content">
-          <div class="year">2012</div>
-          <div class="phase-title">Data Engineer</div>
-          <div class="phase-desc">Architected generic, metadata-driven ETL pipelines.</div>
-          <a href="/my_portfolio/projects/generic-etl-process/" class="timeline-project-link">View Project: Generic ETL Framework →</a>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="content">
-          <div class="year">2018</div>
-          <div class="phase-title">Cloud / Data Architect</div>
-          <div class="phase-desc">Architected fully event-driven, cost-optimized big data pipelines.</div>
-          <a href="/my_portfolio/projects/on-premise-to-cloud/" class="timeline-project-link">View Project: AWS Migration →</a>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="content">
-          <div class="year">2019</div>
-          <div class="phase-title">DevOps / Data Engineer</div>
-          <div class="phase-desc">Large scale migrations and Kubernetes architectures.</div>
-          <a href="/my_portfolio/projects/control-m-to-airflow/" class="timeline-project-link">View Project: Control-M to Airflow →</a>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="content">
-          <div class="year">2023</div>
-          <div class="phase-title">DevOps / Release Architect</div>
-          <div class="phase-desc">Engineered polyglot build orchestrations and CI/CD pipelines.</div>
-          <a href="/my_portfolio/projects/pipeline-factory/" class="timeline-project-link">View Project: Jenkins Pipeline Factory →</a>
-          <a href="/my_portfolio/projects/gated-ci-cd-pipelines/" class="timeline-project-link" style="margin-top: 8px;">View Project: Gated CI/CD & Testing →</a>
-          <a href="/my_portfolio/projects/observability-secret-management/" class="timeline-project-link" style="margin-top: 8px;">View Project: Enterprise Security & Splunk →</a>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="content">
-          <div class="year">2024</div>
-          <div class="phase-title">DevOps / Release Architect</div>
-          <div class="phase-desc">Idempotent migration of 250+ Jenkins pipelines to CloudBees CI.</div>
-          <a href="/my_portfolio/projects/jenkins-to-cloudbees/" class="timeline-project-link">View Project: CloudBees Migration →</a>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="content">
-          <div class="year">2025 Onwards<span class="current-focus-badge">Current Focus</span></div>
-          <div class="phase-title">AI/GenAI Engineer & Architect</div>
-          <div class="phase-desc">LLM agents, RAG systems, agentic platforms, AI Champion award.</div>
-          <a href="/my_portfolio/projects/copilot-agents-extension/" class="timeline-project-link">View Project: Copilot VS Code Extension →</a>
-          <a href="/my_portfolio/projects/jira-release-orchestration/" class="timeline-project-link" style="margin-top: 8px;">View Project: Release Orchestration →</a>
-          <a href="/my_portfolio/projects/agent-development-kit/" class="timeline-project-link" style="margin-top: 8px;">View Project: Agent Development Kit (ADK) →</a>
-          <a href="/my_portfolio/projects/enterprise-ai-platform/" class="timeline-project-link" style="margin-top: 8px;">View Project: Enterprise AI Platform →</a>
-          <a href="/my_portfolio/projects/release-management-agent/" class="timeline-project-link" style="margin-top: 8px;">View Project: Autonomous Release Agent →</a>
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 
   <div class="metrics">
-    <div class="metric">
-      <div class="metric-icon">💻</div>
-      <div class="metric-number">18+</div>
-      <div class="metric-label">Years of Software Engineering</div>
-    </div>
-    <div class="metric">
-      <div class="metric-icon">📜</div>
-      <div class="metric-number">10+</div>
-      <div class="metric-label">Industry Certifications</div>
-    </div>
-    <div class="metric">
-      <div class="metric-icon">🏆</div>
-      <div class="metric-number">4</div>
-      <div class="metric-label">Awards & Recognitions</div>
-    </div>
+    {METRICS.map((metric) => (
+      <div class="metric">
+        <div class="metric-icon">{metric.icon}</div>
+        <div class="metric-number">{metric.value}</div>
+        <div class="metric-label">{metric.label}</div>
+      </div>
+    ))}
   </div>
 </BaseLayout>

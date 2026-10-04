@@ -1,5 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { ABOUT } from '../config';
+import { marked } from 'marked';
+
+// Helper to ensure base url works correctly
+const base = import.meta.env.BASE_URL;
+const getUrl = (path: string) => {
+  return path.startsWith('/') ? `${base === '/' ? '' : base}${path}` : path;
+};
 ---
 
 <BaseLayout title="About">
@@ -181,77 +189,65 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <div class="about-container">
     <div class="profile-header">
-      <img src="/my_portfolio/my_image.jpeg" alt="Vinod Kumar" class="profile-image" />
+      <img src={getUrl(ABOUT.image)} alt={ABOUT.title} class="profile-image" />
       <div class="profile-title">
-        <h1>Vinod Kumar</h1>
-        <h2>Solutions Architect & AI Engineer</h2>
+        <h1>{ABOUT.title}</h1>
+        <h2>{ABOUT.role}</h2>
         <div class="links">
-          <a href="https://linkedin.com/in/vinod-kumar-k-p/" target="_blank">Connect on LinkedIn</a>
-          <a href="https://github.com/vinodkumarkp" target="_blank" class="secondary">View GitHub</a>
+          {ABOUT.socialLinks.map(link => (
+            <a href={link.url} target="_blank" class={link.primary ? '' : 'secondary'}>{link.label}</a>
+          ))}
         </div>
       </div>
     </div>
 
     <div class="about-card">
       <h3>Professional Journey</h3>
-      <p>
-        I'm a Solutions Architect and AI Engineer with 18+ years of experience building data pipelines,
-        cloud infrastructure, and AI systems at scale. My journey started in data engineering and has evolved
-        through cloud architecture, DevOps, and now into leading GenAI initiatives.
-      </p>
-      <p>
-        I am passionate about solving complex architectural challenges and mentoring teams to deliver
-        systems that scale. I believe in building systems that are not just technically sound but also
-        maintainable, observable, and secure. Recently, I've been deeply invested in the AI/GenAI space—building agent platforms, RAG systems, and helping organizations adopt AI practices safely. I even earned the "AI Champion" award for driving AI adoption across application teams.
-      </p>
+      {ABOUT.journey.split('\n\n').map(paragraph => (
+        <p>{paragraph}</p>
+      ))}
     </div>
 
     <div class="about-card">
       <h3>Core Expertise</h3>
       <div class="skills-grid">
         <ul class="skill-list">
-          <li>Enterprise Cloud Architecture (AWS, Azure)</li>
-          <li>Event-driven & Batch Data Pipelines</li>
-          <li>GenAI, LLM Agents & RAG Systems</li>
+          {ABOUT.coreExpertise.slice(0, Math.ceil(ABOUT.coreExpertise.length / 2)).map(skill => (
+            <li>{skill}</li>
+          ))}
         </ul>
         <ul class="skill-list">
-          <li>DevOps & Release Orchestration</li>
-          <li>Microservices & API-first design</li>
-          <li>Infrastructure as Code (Terraform)</li>
+          {ABOUT.coreExpertise.slice(Math.ceil(ABOUT.coreExpertise.length / 2)).map(skill => (
+            <li>{skill}</li>
+          ))}
         </ul>
       </div>
     </div>
 
+    {ABOUT.leadership && (
     <div class="about-card">
       <h3>Leadership & Mentorship</h3>
-      <p>
-        I believe that architecture is only as successful as the teams executing it. I have extensive experience leading and elevating cross-functional application teams (8-15+ engineers) across mixed experience levels. 
-      </p>
-      <div class="skills-grid">
+      <p>{ABOUT.leadership.description}</p>
+      <div class="skills-grid" style="display: block;">
         <ul class="skill-list">
-          <li><strong>AI/GenAI Workshops:</strong> Designed and conducted enterprise-wide presentations teaching teams how to build, evaluate, and govern LLM agents using the Agent Development Kit.</li>
-          <li><strong>DevOps Modernization:</strong> Led hands-on workshops instructing application teams on CI/CD best practices, writing automated unit tests, and resolving SonarQube quality gates.</li>
-        </ul>
-        <ul class="skill-list">
-          <li><strong>Executive Communication:</strong> Translated complex architectural decisions (ADRs) and AI governance strategies into clear, actionable presentations for non-technical stakeholders.</li>
+          {ABOUT.leadership.points.map(point => (
+            <li set:html={marked.parseInline(point)}></li>
+          ))}
         </ul>
       </div>
     </div>
+    )}
 
+    {ABOUT.certifications && ABOUT.certifications.length > 0 && (
     <div class="about-card">
       <h3>Certifications</h3>
       <div class="cert-tags">
-        <span class="cert-tag">AWS Certified Solutions Architect</span>
-        <span class="cert-tag">AWS Certified DevOps Engineer</span>
-        <span class="cert-tag">Azure Certified Architect</span>
-        <span class="cert-tag">CKA & CKAD (Kubernetes)</span>
-        <span class="cert-tag">Claude Certified Associate Architect</span>
-        <span class="cert-tag">Docker Certified Associate</span>
-        <span class="cert-tag">Apache Airflow Certified</span>
-        <span class="cert-tag">Databricks Certified</span>
-        <span class="cert-tag">SAFe Scrum Master</span>
+        {ABOUT.certifications.map(cert => (
+          <span class="cert-tag">{cert}</span>
+        ))}
       </div>
     </div>
+    )}
 
   </div>
 </BaseLayout>

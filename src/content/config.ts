@@ -7,6 +7,7 @@ const projectsCollection = defineCollection({
     year: z.number(),
     phase: z.string(),
     description: z.string(),
+    tags: z.array(z.string()).optional(),
   }),
 });
 

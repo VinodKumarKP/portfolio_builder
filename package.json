@@ -9,6 +9,8 @@
     "deploy": "npm run build && git add dist/ && git commit -m 'Deploy' && git push"
   },
   "dependencies": {
-    "astro": "^4.0.0"
+    "@types/marked": "^5.0.2",
+    "astro": "^4.0.0",
+    "marked": "^18.0.14"
   }
 }
