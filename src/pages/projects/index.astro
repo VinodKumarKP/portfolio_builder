@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { PROJECTS_SIDEBAR } from '../../config';
 
 const allProjects = await getCollection('projects');
 // Sort projects by year descending
@@ -126,6 +127,83 @@ const getUrl = (path: string) => {
       border-color: rgba(0, 102, 204, 0.3);
     }
 
+    .projects-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .projects-sidebar {
+      position: sticky;
+      top: 120px;
+      padding: var(--space-lg);
+      background: var(--color-bg-light);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      height: fit-content;
+    }
+
+    .projects-sidebar h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--color-border);
+    }
+
+    .projects-sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .projects-sidebar li {
+      margin-bottom: var(--space-lg);
+    }
+
+    .projects-sidebar li:last-child {
+      margin-bottom: 0;
+    }
+
+    .projects-sidebar li strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-xs);
+    }
+
+    .projects-sidebar li a {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      text-decoration: none;
+      padding: 6px 0 6px 12px;
+      border-left: 2px solid transparent;
+      transition: all 0.2s ease;
+      margin-bottom: 0.25rem;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .projects-sidebar li a:hover {
+      color: var(--color-accent);
+      border-left-color: var(--color-accent);
+      background: rgba(0, 102, 204, 0.05);
+    }
+
+    @media (max-width: 1024px) {
+      .projects-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .projects-sidebar {
+        position: relative;
+        top: 0;
+      }
+    }
+
     @media (max-width: 768px) {
       .projects-grid {
         grid-template-columns: 1fr;
@@ -138,9 +216,26 @@ const getUrl = (path: string) => {
     <p>Detailed project case studies showcasing architecture, challenges, and impact</p>
   </div>
 
-  <div class="projects-grid">
-    {sortedProjects.map((project) => (
-      <a href={getUrl(`/projects/${project.slug}/`)} class="project-card">
+  <div class="projects-layout">
+    {PROJECTS_SIDEBAR && (
+      <aside class="projects-sidebar">
+        <h3>{PROJECTS_SIDEBAR.title}</h3>
+        <ul>
+          {PROJECTS_SIDEBAR.categories.map((category) => (
+            <li>
+              <strong>{category.name}</strong>
+              {category.projects.map((project) => (
+                <a href={getUrl(`/projects/${project.slug}/`)}>{project.title}</a>
+              ))}
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+
+    <div class="projects-grid">
+      {sortedProjects.map((project) => (
+        <a href={getUrl(`/projects/${project.slug}/`)} class="project-card">
         <div class="project-card-header">
           <div class="project-card-year">{project.data.year}</div>
           <h2 class="project-card-title">{project.data.title}</h2>
@@ -155,6 +250,7 @@ const getUrl = (path: string) => {
           ))}
         </div>
       </a>
-    ))}
+      ))}
+    </div>
   </div>
 </BaseLayout>

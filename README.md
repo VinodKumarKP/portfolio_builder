@@ -137,7 +137,33 @@ Your projects are managed using Astro Content Collections. Delete the example ma
 > [!TIP]
 > **Check out `PROJECT_TEMPLATE.md`** located in the root of the repository for a comprehensive guide on how to format your Markdown projects. It explains how to structure your case studies to automatically render metrics cards, issue/solution blocks, and more!
 
-### Step 4: Customize Dark Mode & SEO (Optional)
+### Step 4: Customize Projects Index Sidebar (Optional)
+
+You can add a sidebar to your projects listing page that organizes projects by category (e.g., "Architecture Patterns", "Technology Stack"). Edit `src/config.ts`:
+
+```typescript
+export const PROJECTS_SIDEBAR = {
+  title: "Technology Stack",
+  categories: [
+    {
+      name: "Frontend",
+      projects: [
+        { title: "Project Alpha", slug: "project-1" },
+      ]
+    },
+    {
+      name: "Backend & Data",
+      projects: [
+        { title: "Project Beta", slug: "project-2" },
+      ]
+    }
+  ]
+};
+```
+
+The sidebar is optional - simply remove `PROJECTS_SIDEBAR` from config if you don't want it!
+
+### Step 5: Customize Dark Mode & SEO (Optional)
 
 **Dark Mode:**
 The portfolio includes a dark mode toggle button in the navbar. Users can click the moon/sun icon to switch themes, and their preference is saved locally. The theme automatically respects system preferences on first visit.

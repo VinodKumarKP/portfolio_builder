@@ -45,6 +45,31 @@ export const METRICS = [
   { icon: "☕", value: "1000+", label: "Cups of Coffee" },
 ];
 
+export const PROJECTS_SIDEBAR = {
+  title: "Technology Stack",
+  categories: [
+    {
+      name: "Frontend",
+      projects: [
+        { title: "Project Alpha: Monolith to Serverless", slug: "project-1" },
+      ]
+    },
+    {
+      name: "Backend & Data",
+      projects: [
+        { title: "Project Beta: Data Processing Pipeline", slug: "project-2" },
+      ]
+    },
+    {
+      name: "Cloud & DevOps",
+      projects: [
+        { title: "Project Alpha: Monolith to Serverless", slug: "project-1" },
+        { title: "Project Beta: Data Processing Pipeline", slug: "project-2" },
+      ]
+    }
+  ]
+};
+
 export const ABOUT = {
   title: "John Doe",
   role: "Senior Software Engineer",
