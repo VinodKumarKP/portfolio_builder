@@ -53,25 +53,87 @@ Open `astro.config.mjs` and update your deployment settings:
 - `base`: Uncomment and change this to your repository name (e.g., `/my_portfolio`) **if deploying to GitHub Pages project sites**. If deploying to a custom domain or a user site (e.g. `your-username.github.io`), leave `base` commented out.
 
 ### Step 2: Personalize Your Data (`src/config.ts`)
-Open `src/config.ts` and replace the placeholder "John Doe" data with your own. This file powers the entire site:
-- **`SITE`**: Basic site metadata (title in browser tab, meta description).
-- **`HERO`**: Homepage hero section text and call-to-action buttons.
-- **`TIMELINE`**: Your career/education journey for the homepage.
-- **`METRICS`**: High-level stats displayed at the bottom of the homepage.
-- **`ABOUT`**: Drives the entire About page (journey, expertise, leadership, certifications).
+Open `src/config.ts` and replace the placeholder "John Doe" data with your own. This file powers the entire site. Below is a detailed breakdown of each section:
 
-**Handling Images:**
-To change your profile picture, place your image (e.g. `profile.jpg`) in the **`public/`** folder of your repository. 
-Then, in `src/config.ts`, reference it from the root:
+#### 1. `SITE`
+Defines the core metadata for SEO and browser tabs.
+```typescript
+export const SITE = {
+  title: "Jane Doe - Full Stack Developer",
+  description: "A portfolio showcasing modern web applications.",
+  url: "https://janedoe.com",
+};
+```
+
+#### 2. `HERO`
+Controls the large introduction text on the home page.
+```typescript
+export const HERO = {
+  title: "Software Engineer & Builder",
+  subtitle: "5+ years building scalable web applications.",
+  ctaPrimary: { label: "Explore Projects", href: "/projects" }, // Links to projects page
+  ctaSecondary: { label: "Learn More", href: "/about" },        // Links to about page
+};
+```
+
+#### 3. `TIMELINE`
+An array of objects representing your career or educational journey on the home page.
+```typescript
+export const TIMELINE = [
+  {
+    year: "2024",
+    isCurrent: true, // Adds a glowing "Current Focus" badge
+    title: "Senior Engineer",
+    description: "Led migration to modern microservices.",
+    links: [ // Optional links to attach to this timeline event
+      { label: "View Project →", url: "/projects/project-1/" } 
+    ]
+  }
+];
+```
+
+#### 4. `METRICS`
+A grid of statistics displayed at the bottom of the home page. You can use emojis as icons.
+```typescript
+export const METRICS = [
+  { icon: "💻", value: "5+", label: "Years of Experience" },
+  { icon: "🚀", value: "10+", label: "Projects Completed" }
+];
+```
+
+#### 5. `ABOUT`
+Drives the entire `/about` page layout.
 ```typescript
 export const ABOUT = {
-  // ...
-  image: "/profile.jpg", // Don't use a relative path, use an absolute path starting with /
-}
+  title: "Jane Doe",
+  role: "Senior Software Engineer",
+  image: "/profile.jpg", // Make sure to place profile.jpg inside the public/ folder!
+  socialLinks: [
+    { label: "Connect on LinkedIn", url: "https://linkedin.com/in/...", primary: true },
+    { label: "View GitHub", url: "https://github.com/...", primary: false }
+  ],
+  journey: `I'm a passionate software engineer... \n\nI thrive in collaborative...`, // Use \n\n for paragraphs
+  coreExpertise: [
+    "Frontend Development (React, Vue)",
+    "Backend Development (Node.js, Python)"
+  ],
+  leadership: { // Optional section
+    description: "I've had the opportunity to lead teams...",
+    points: [
+      "**Technical Leadership:** Guided a team of 5 engineers...",
+    ]
+  },
+  certifications: [ // Optional section
+    "AWS Certified Developer",
+  ]
+};
 ```
 
 ### Step 3: Add Your Projects (`src/content/projects/`)
 Your projects are managed using Astro Content Collections. Delete the example markdown files in `src/content/projects/` and add your own `.md` files.
+
+> [!TIP]
+> **Check out `PROJECT_TEMPLATE.md`** located in the root of the repository for a comprehensive guide on how to format your Markdown projects. It explains how to structure your case studies to automatically render metrics cards, issue/solution blocks, and more!
 
 Each project markdown file must include the following frontmatter at the top:
 ```yaml
