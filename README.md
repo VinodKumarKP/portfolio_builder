@@ -1,4 +1,4 @@
-# Astro Portfolio Template
+# Portfolio Builder
 
 A fast, customizable, and modern portfolio template built with [Astro](https://astro.build/). 
 
