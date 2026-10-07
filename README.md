@@ -1,6 +1,6 @@
 # Portfolio Builder
 
-A fast, customizable, and modern portfolio template built with [Astro](https://astro.build/). 
+A fast, customizable, and modern portfolio template 
 
 Designed for developers, engineers, and architects who want a stunning, performance-driven portfolio that is extremely easy to maintain. 
 
